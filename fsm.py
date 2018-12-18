@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 
 from send_msg import send_text_message
 
+
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(
@@ -95,6 +96,7 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         responese = send_text_message(sender_id, "想查什麼星座呢？")
+
         self.advance(event)
 
     def on_enter_ariesState(self, event):
@@ -104,12 +106,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_taurusState(self, event):
@@ -119,12 +122,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_geminiState(self, event):
@@ -134,12 +138,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_cancerState(self, event):
@@ -149,12 +154,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_leoState(self, event):
@@ -164,12 +170,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_virgoState(self, event):
@@ -179,12 +186,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_libraState(self, event):
@@ -194,12 +202,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_scorpioState(self, event):
@@ -209,12 +218,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_sagittariusState(self, event):
@@ -224,12 +234,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_capricornState(self, event):
@@ -239,12 +250,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_aquariusState(self, event):
@@ -254,12 +266,13 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_enter_piscesState(self, event):
@@ -269,17 +282,51 @@ class TocMachine(GraphMachine):
         target_page = urlopen(target_page_string)
         soup = BeautifulSoup(target_page, "html.parser")
 
-        name_box = soup.find(id="astroDailyData_career")
+        name_box = soup.find(id="astroDailyData_all")
         name = name_box.text.strip()
         print(name)
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+
         self.go_back()
 
     def on_exit_astroState(self, event):
         print('離開astroState')
 
+    def on_exit_ariesState(self):
+        print('離開ariesState')
+
+    def on_exit_taurusState(self):
+        print('離開taurusState')
+
+    def on_exit_geminiState(self):
+        print('離開geminiState')
+
     def on_exit_cancerState(self):
         print('離開cancerState')
+
+    def on_exit_leoState(self):
+        print('離開leoState')
+
+    def on_exit_virgoState(self):
+        print('離開virgoState')
+
+    def on_exit_libraState(self):
+        print('離開libraState')
+
+    def on_exit_scorpioState(self):
+        print('離開scorpioState')
+
+    def on_exit_sagittariusState(self):
+        print('離開sagittariusState')
+
+    def on_exit_capricornState(self):
+        print('離開capricornState')
+
+    def on_exit_aquariusState(self):
+        print('離開aquariusState')
+
+    def on_exit_piscesState(self):
+        print('離開piscesState')
 
