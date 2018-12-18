@@ -1,6 +1,6 @@
 import json
 import sys
-sys.path.append('home/TOC-Project-2019/demo_example')
+#sys.path.append('home/TOC-Project-2019/demo_example')
 from bottle import route, run, request, static_file
 from send_msg import send_text_message
 from fsm import TocMachine
@@ -8,33 +8,114 @@ from fsm import TocMachine
 machine = TocMachine(
     states=[
         'user',
-        'state1',
-        'state2',
-        'state3'
+        'astroState',
+        'ariesState',
+        'taurusState',
+        'geminiState',
+        'cancerState',
+        'leoState',
+        'virgoState',
+        'libraState',
+        'scorpioState',
+        'sagittariusState',
+        'capricornState',
+        'aquariusState',
+        'piscesState',
     ],
     transitions=[
         {
             'trigger': 'advance',
             'source': 'user',
-            'dest': 'state1',
-            'conditions': 'is_going_to_state1'
-        },
-        {
-            'trigger': 'go_back_from_state1',
-            'source': 'state1',
-            'dest': 'state2'
+            'dest': 'astroState',
+            'conditions': 'is_going_to_astroState'
         },
         {
             'trigger': 'advance',
-            'source': 'user',
-            'dest': 'state3',
-            'conditions': 'is_going_to_state3'
+            'source': 'astroState',
+            'dest': 'ariesState',
+            'conditions': 'is_going_to_ariesState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'taurusState',
+            'conditions': 'is_going_to_taurusState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'geminiState',
+            'conditions': 'is_going_to_geminiState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'cancerState',
+            'conditions': 'is_going_to_cancerState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'leoState',
+            'conditions': 'is_going_to_leoState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'virgoState',
+            'conditions': 'is_going_to_virgoState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'libraState',
+            'conditions': 'is_going_to_libraState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'scorpioState',
+            'conditions': 'is_going_to_scorpioState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'sagittariusState',
+            'conditions': 'is_going_to_sagittariusState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'capricornState',
+            'conditions': 'is_going_to_capricornState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'aquariusState',
+            'conditions': 'is_going_to_aquariusState'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'astroState',
+            'dest': 'piscesState',
+            'conditions': 'is_going_to_piscesState'
         },
         {
             'trigger': 'go_back',
             'source': [
-                'state2',
-                'state3'
+                'ariesState',
+                'taurusState',
+                'geminiState',
+                'cancerState',
+                'leoState',
+                'virgoState',
+                'libraState',
+                'scorpioState',
+                'sagittariusState',
+                'capricornState',
+                'aquariusState',
+                'piscesState'
             ],
             'dest': 'user'
         }
