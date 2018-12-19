@@ -91,6 +91,19 @@ class TocMachine(GraphMachine):
             return text.lower() == '雙魚座'
         return False
 
+    def is_going_to_subUser(self, event):
+        if event.get("message"):
+            text = event['message']['text']
+            return text.lower() == '查其他'
+        return False
+
+    def on_enter_subUser(self, event):
+        print("subuser")
+
+        sender_id = event['sender']['id']
+        responese = send_text_message(sender_id, "想查點什麼呢～")
+        responese = send_text_message(sender_id, "-> 查星座")
+
     def on_enter_astroState(self, event):
         print("想查什麼星座呢？")
 
@@ -113,7 +126,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_taurusState(self, event):
         print("分析金牛座...")
@@ -129,7 +142,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_geminiState(self, event):
         print("分析雙子座...")
@@ -145,7 +158,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_cancerState(self, event):
         print("分析巨蟹座...")
@@ -161,7 +174,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_leoState(self, event):
         print("分析獅子座...")
@@ -177,7 +190,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_virgoState(self, event):
         print("分析處女座...")
@@ -193,7 +206,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_libraState(self, event):
         print("分析天秤座...")
@@ -209,7 +222,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_scorpioState(self, event):
         print("分析天蠍座...")
@@ -225,7 +238,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_sagittariusState(self, event):
         print("分析射手座...")
@@ -241,7 +254,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_capricornState(self, event):
         print("分析魔羯座...")
@@ -257,7 +270,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_aquariusState(self, event):
         print("分析水瓶座...")
@@ -273,7 +286,7 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
 
     def on_enter_piscesState(self, event):
         print("分析雙魚座...")
@@ -289,44 +302,52 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
 
-        self.go_back()
+        self.go_back(event)
+
+    def on_enter_backState(self, event):
+        print("進入循環模式")
 
     def on_exit_astroState(self, event):
         print('離開astroState')
 
-    def on_exit_ariesState(self):
+    def on_exit_ariesState(self, event):
         print('離開ariesState')
 
-    def on_exit_taurusState(self):
+    def on_exit_taurusState(self, event):
         print('離開taurusState')
 
-    def on_exit_geminiState(self):
+    def on_exit_geminiState(self, event):
         print('離開geminiState')
 
-    def on_exit_cancerState(self):
+    def on_exit_cancerState(self, event):
         print('離開cancerState')
 
-    def on_exit_leoState(self):
+    def on_exit_leoState(self, event):
         print('離開leoState')
 
-    def on_exit_virgoState(self):
+    def on_exit_virgoState(self, event):
         print('離開virgoState')
 
-    def on_exit_libraState(self):
+    def on_exit_libraState(self, event):
         print('離開libraState')
 
-    def on_exit_scorpioState(self):
+    def on_exit_scorpioState(self, event):
         print('離開scorpioState')
 
-    def on_exit_sagittariusState(self):
+    def on_exit_sagittariusState(self, event):
         print('離開sagittariusState')
 
-    def on_exit_capricornState(self):
+    def on_exit_capricornState(self, event):
         print('離開capricornState')
 
-    def on_exit_aquariusState(self):
+    def on_exit_aquariusState(self, event):
         print('離開aquariusState')
 
-    def on_exit_piscesState(self):
+    def on_exit_piscesState(self, event):
         print('離開piscesState')
+
+    def on_exit_backState(self, event):
+        print('離開backState')
+
+
 

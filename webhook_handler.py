@@ -5,6 +5,7 @@ from bottle import route, run, request, static_file
 from send_msg import send_text_message
 from fsm import TocMachine
 
+
 machine = TocMachine(
     states=[
         'user',
@@ -21,83 +22,85 @@ machine = TocMachine(
         'capricornState',
         'aquariusState',
         'piscesState',
+        'backState',
+        'subUser'
     ],
     transitions=[
         {
             'trigger': 'advance',
-            'source': 'user',
+            'source': ['user', 'subUser'],
             'dest': 'astroState',
             'conditions': 'is_going_to_astroState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'ariesState',
             'conditions': 'is_going_to_ariesState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'taurusState',
             'conditions': 'is_going_to_taurusState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'geminiState',
             'conditions': 'is_going_to_geminiState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'cancerState',
             'conditions': 'is_going_to_cancerState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'leoState',
             'conditions': 'is_going_to_leoState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'virgoState',
             'conditions': 'is_going_to_virgoState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'libraState',
             'conditions': 'is_going_to_libraState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'scorpioState',
             'conditions': 'is_going_to_scorpioState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'sagittariusState',
             'conditions': 'is_going_to_sagittariusState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'capricornState',
             'conditions': 'is_going_to_capricornState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'aquariusState',
             'conditions': 'is_going_to_aquariusState'
         },
         {
             'trigger': 'advance',
-            'source': 'astroState',
+            'source': ['astroState', 'backState'],
             'dest': 'piscesState',
             'conditions': 'is_going_to_piscesState'
         },
@@ -117,7 +120,15 @@ machine = TocMachine(
                 'aquariusState',
                 'piscesState'
             ],
-            'dest': 'user'
+            'dest': 'backState'
+        },
+        {
+            'trigger': 'go_subUser',
+            'source': [
+                'backState'
+            ],
+            'dest': 'subUser',
+            'conditions': 'is_going_to_subUser'
         }
     ],
     initial='user',
@@ -135,7 +146,13 @@ def webhook_handler():
 
     if body['object'] == "page":
         event = body['entry'][0]['messaging'][0]
-        machine.advance(event)
+        print('主要區')
+        print(machine.state)
+        if machine.state == 'backState':
+            machine.go_subUser(event)
+            machine.advance(event)
+        else:
+            machine.advance(event)
         return 'OK'
 
 @route('/show-fsm', methods=['GET'])
