@@ -1,5 +1,5 @@
 from transitions.extensions import GraphMachine
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 
 from send_msg import send_text_message
@@ -12,6 +12,24 @@ class TocMachine(GraphMachine):
             **machine_configs
         )
         self.target_page_no_num_string = "https://m.click108.com.tw/astro/index.php?astroNum="
+        self.ptt_page_string = "https://www.ptt.cc/bbs/Beauty/index.html"
+
+    def get_titles(self, page_string):
+
+        r = Request(page_string)
+        r.add_header("user-agent", "Mozilla/5.0")
+
+        result = []
+        page = urlopen(r)
+        soup = BeautifulSoup(page, 'html.parser')
+        divs = soup.find_all('div', 'r-ent')
+        for d in divs:
+            # 取得文章連結及標題
+            if d.find('div', 'title'):  # 有超連結，表示文章存在，未被刪除
+                t = d.find('div', 'title')
+                result.append(d.find('div', 'title').text)
+
+        return result
 
     def is_going_to_astroState(self, event):
         if event.get("message"):
@@ -97,12 +115,29 @@ class TocMachine(GraphMachine):
             return text.lower() == '查其他'
         return False
 
+    def is_going_to_beautyState(self, event):
+        if event.get("message"):
+            text = event['message']['text']
+            return text.lower() == '圖呢'
+        return False
+
     def on_enter_subUser(self, event):
         print("subuser")
 
         sender_id = event['sender']['id']
-        responese = send_text_message(sender_id, "想查點什麼呢～")
-        responese = send_text_message(sender_id, "-> 查星座")
+        responese = send_text_message(sender_id, "還想查點什麼呢～")
+        responese = send_text_message(sender_id, "[可用指令]")
+        responese = send_text_message(sender_id, "  -> 查星座")
+        responese = send_text_message(sender_id, "  -> 圖呢")
+
+    def on_enter_beautyState(self, event):
+        print("這不是來了嗎～")
+
+        sender_id = event['sender']['id']
+        responese = send_text_message(sender_id, "這不是來了嗎～")
+        responese = send_text_message(sender_id, str(self.get_titles(self.ptt_page_string)))
+
+        self.go_back(event)
 
     def on_enter_astroState(self, event):
         print("想查什麼星座呢？")
@@ -125,6 +160,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -141,6 +178,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -157,6 +196,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -173,6 +214,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -189,6 +232,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -205,6 +250,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -221,6 +268,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -237,6 +286,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -253,6 +304,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -269,6 +322,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -285,6 +340,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -301,6 +358,8 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
+        send_text_message(sender_id, "[可用指令]")
+        send_text_message(sender_id, "  -> 查其他")
 
         self.go_back(event)
 
@@ -348,6 +407,9 @@ class TocMachine(GraphMachine):
 
     def on_exit_backState(self, event):
         print('離開backState')
+
+    def on_exit_beautyState(self, event):
+        print('離開beautyState')
 
 
 

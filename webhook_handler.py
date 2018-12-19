@@ -23,7 +23,8 @@ machine = TocMachine(
         'aquariusState',
         'piscesState',
         'backState',
-        'subUser'
+        'subUser',
+        'beautyState'
     ],
     transitions=[
         {
@@ -31,6 +32,12 @@ machine = TocMachine(
             'source': ['user', 'subUser'],
             'dest': 'astroState',
             'conditions': 'is_going_to_astroState'
+        },
+        {
+            'trigger': 'advance',
+            'source': ['user', 'subUser'],
+            'dest': 'beautyState',
+            'conditions': 'is_going_to_beautyState'
         },
         {
             'trigger': 'advance',
@@ -129,7 +136,14 @@ machine = TocMachine(
             ],
             'dest': 'subUser',
             'conditions': 'is_going_to_subUser'
-        }
+        },
+        {
+            'trigger': 'go_back',
+            'source': [
+                'beautyState',
+            ],
+            'dest': 'subUser'
+        },
     ],
     initial='user',
     auto_transitions=False,
