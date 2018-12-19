@@ -24,7 +24,8 @@ machine = TocMachine(
         'piscesState',
         'backState',
         'subUser',
-        'beautyState'
+        'beautyState',
+        'help'
     ],
     transitions=[
         {
@@ -38,6 +39,12 @@ machine = TocMachine(
             'source': ['user', 'subUser'],
             'dest': 'beautyState',
             'conditions': 'is_going_to_beautyState'
+        },
+        {
+            'trigger': 'advance',
+            'source': ['user', 'subUser'],
+            'dest': 'help',
+            'conditions': 'is_going_to_help'
         },
         {
             'trigger': 'advance',
@@ -141,6 +148,7 @@ machine = TocMachine(
             'trigger': 'go_back',
             'source': [
                 'beautyState',
+                'help'
             ],
             'dest': 'subUser'
         },

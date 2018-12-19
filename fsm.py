@@ -121,14 +121,21 @@ class TocMachine(GraphMachine):
             return text.lower() == '圖呢'
         return False
 
+    def is_going_to_help(self, event):
+        if event.get("message"):
+            text = event['message']['text']
+            return text.lower() == '幫助'
+        return False
+
     def on_enter_subUser(self, event):
         print("subuser")
 
         sender_id = event['sender']['id']
-        responese = send_text_message(sender_id, "還想查點什麼呢～")
-        responese = send_text_message(sender_id, "[可用指令]")
-        responese = send_text_message(sender_id, "  -> 查星座")
-        responese = send_text_message(sender_id, "  -> 圖呢")
+        responese = send_text_message(sender_id, "還想查點什麼呢～\n"
+                                      + "[可用指令]\n"
+                                      + "  -> 查星座\n"
+                                      + "  -> 圖呢\n"
+                                      + "  -> 幫助")
 
     def on_enter_beautyState(self, event):
         print("這不是來了嗎～")
@@ -136,6 +143,18 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         responese = send_text_message(sender_id, "這不是來了嗎～")
         responese = send_text_message(sender_id, str(self.get_titles(self.ptt_page_string)))
+
+        self.go_back(event)
+
+    def on_enter_help(self, event):
+        print("幫助")
+
+        sender_id = event['sender']['id']
+        send_text_message(sender_id, "[幫助]\n"
+                          + "* 查星座\n    查詢當日星座運勢\n"
+                          + "* 圖呢\n    潮男正妹的圖呢???\n"
+                          + "* 幫助\n"
+                          + "p.s: 進入[查星座]後，可不斷輸入星座，直到輸入[查其他]跳轉回去上一層")
 
         self.go_back(event)
 
@@ -160,8 +179,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -178,8 +198,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -196,8 +217,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -214,8 +236,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -232,8 +255,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -250,8 +274,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -268,8 +293,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -286,8 +312,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -304,8 +331,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -322,8 +350,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -340,8 +369,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
@@ -358,8 +388,9 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, name)
-        send_text_message(sender_id, "[可用指令]")
-        send_text_message(sender_id, "  -> 查其他")
+        send_text_message(sender_id, "[可用指令]\n"
+                          + "  -> 查其他\n"
+                          + "  -> （繼續輸入星座）")
 
         self.go_back(event)
 
