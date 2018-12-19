@@ -150,31 +150,30 @@ class TocMachine(GraphMachine):
 
         sender_id = event['sender']['id']
         send_text_message(sender_id, "這不是來了嗎～")
+        send_image_message(sender_id, "https://i.imgur.com/6Ej1jNd.jpg")
 
-        for half_entryurl in self.get_titles(self.ptt_page_string):
-            send_text_message(sender_id, half_entryurl)
-            entryurl = self.pttroot + half_entryurl
-
-            r = Request(entryurl)
-            r.add_header("user-agent", "Mozilla/5.0")
-
-            page = urlopen(r)
-            soup = BeautifulSoup(page, 'html.parser')
-
-            d = soup.find(id='main-content')
-            all_a = d.find_all('a')
-            for a in all_a:
-                picurl = a.text
-                if picurl[0:20] == 'https://i.imgur.com/':
-                    print(picurl)
-                    send_image_message(sender_id, picurl)
-                else:
-                    pass
-            break
-                    # send_image_message(sender_id, picurl)
-            # if d.find('a'):
-            #     picurl = d.find('a')['href']
-            #     send_image_message(sender_id, 'https:' + picurl)
+        # count = 0
+        #
+        # for half_entryurl in self.get_titles(self.ptt_page_string):
+        #
+        #     send_text_message(sender_id, half_entryurl)
+        #     entryurl = self.pttroot + half_entryurl
+        #
+        #     r = Request(entryurl)
+        #     r.add_header("user-agent", "Mozilla/5.0")
+        #
+        #     page = urlopen(r)
+        #     soup = BeautifulSoup(page, 'html.parser')
+        #
+        #     d = soup.find(id='main-content')
+        #     all_a = d.find_all('a')
+        #
+        #     for a in all_a:
+        #         picurl = a.text
+        #         if picurl[0:20] == 'https://i.imgur.com/':
+        #             print(picurl)
+        #             send_image_message(sender_id, picurl)
+        #             break
 
         self.go_back(event)
 
