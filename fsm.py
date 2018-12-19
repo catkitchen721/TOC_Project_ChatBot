@@ -2,7 +2,7 @@ from transitions.extensions import GraphMachine
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 
-from send_msg import send_text_message
+from send_msg import send_text_message, send_image_message
 
 
 class TocMachine(GraphMachine):
@@ -13,6 +13,7 @@ class TocMachine(GraphMachine):
         )
         self.target_page_no_num_string = "https://m.click108.com.tw/astro/index.php?astroNum="
         self.ptt_page_string = "https://www.ptt.cc/bbs/Beauty/index.html"
+        self.pttroot = "https://www.ptt.cc"
 
     def get_titles(self, page_string):
 
@@ -20,16 +21,23 @@ class TocMachine(GraphMachine):
         r.add_header("user-agent", "Mozilla/5.0")
 
         result = []
+        returnurls = []
         page = urlopen(r)
         soup = BeautifulSoup(page, 'html.parser')
+
         divs = soup.find_all('div', 'r-ent')
         for d in divs:
             # 取得文章連結及標題
-            if d.find('div', 'title'):  # 有超連結，表示文章存在，未被刪除
-                t = d.find('div', 'title')
-                result.append(d.find('div', 'title').text)
+            if d.select('.title'):  # 有超連結，表示文章存在，未被刪除
+                t = d.select('.title')[0]
+            result.append(t)
 
-        return result
+        for d in result:
+            if d.find('a'):
+                picurl = d.find('a')['href']
+                returnurls.append(picurl)
+
+        return returnurls
 
     def is_going_to_astroState(self, event):
         if event.get("message"):
@@ -141,8 +149,32 @@ class TocMachine(GraphMachine):
         print("這不是來了嗎～")
 
         sender_id = event['sender']['id']
-        responese = send_text_message(sender_id, "這不是來了嗎～")
-        responese = send_text_message(sender_id, str(self.get_titles(self.ptt_page_string)))
+        send_text_message(sender_id, "這不是來了嗎～")
+
+        for half_entryurl in self.get_titles(self.ptt_page_string):
+            send_text_message(sender_id, half_entryurl)
+            entryurl = self.pttroot + half_entryurl
+
+            r = Request(entryurl)
+            r.add_header("user-agent", "Mozilla/5.0")
+
+            page = urlopen(r)
+            soup = BeautifulSoup(page, 'html.parser')
+
+            d = soup.find(id='main-content')
+            all_a = d.find_all('a')
+            for a in all_a:
+                picurl = a.text
+                if picurl[0:20] == 'https://i.imgur.com/':
+                    print(picurl)
+                    send_image_message(sender_id, picurl)
+                else:
+                    pass
+            break
+                    # send_image_message(sender_id, picurl)
+            # if d.find('a'):
+            #     picurl = d.find('a')['href']
+            #     send_image_message(sender_id, 'https:' + picurl)
 
         self.go_back(event)
 
